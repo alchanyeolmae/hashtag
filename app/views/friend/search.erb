@@ -1,0 +1,11 @@
+<form action="/friend/search" method="post">
+    <input type="text" name="search">
+    <button type="submit">검색</button>
+</form>
+    
+<% if @users %>
+    Let you see<br />
+    <% @users.each do |us| %>
+        <%= us.nickname %><br />
+    <% end %>
+<% end %>

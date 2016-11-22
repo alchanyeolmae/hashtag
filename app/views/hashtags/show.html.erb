@@ -1,0 +1,13 @@
+<h5>What you want to see: </h5><h1>#<%= params[:hashtag] %></h1>
+<% if @hashtagged %>
+  <% @hashtagged.each do |hashtagged| %>
+    <% view    = hashtagged.class.to_s.underscore.pluralize %>
+    <% partial = hashtagged.class.to_s.underscore %>
+    <strong>NICKNAME: </strong><%= hashtagged.user.nickname %><br>
+    <strong>TITLE: </strong><%= hashtagged.title %><br />
+    <strong>CONTENT: </strong><%= hashtagged.content %><br>
+    <hr>
+  <% end -%>
+<% else -%>
+  <p>There is no match for the <em><%= params[:hashtag] %></em> hashtag.</p>
+<% end -%>

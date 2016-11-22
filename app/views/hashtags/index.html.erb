@@ -1,0 +1,15 @@
+<h1><%= params[:search_hash] %></h1><br>
+
+<% if @hashtagged %>
+  <% @hashtagged.each do |hashtagged| %>
+    <% view    = hashtagged.class.to_s.underscore.pluralize %>
+    <% partial = hashtagged.class.to_s.underscore %>
+    <strong>NICKNAME: </strong><%= hashtagged.user.nickname %><br>
+    <strong>TITLE: </strong><%= hashtagged.title %><br />
+    <strong>CONTENT: </strong><%= hashtagged.content %><br>
+    <hr>
+    
+  <% end %>
+<% else -%>
+  <p>There is no match for the <em><%= params[:search_hash] %></em> hashtag.</p>
+<% end -%>

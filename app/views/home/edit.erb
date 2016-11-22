@@ -1,0 +1,17 @@
+<div class="bg" style="margin-top: 20px; margin-left: 100px; margin-right: 100px">
+  <h4 ><p><%= current_user.email %>
+  <%= current_user.nickname %>님, 환영합니다.
+  <%= link_to '로그아웃', destroy_user_session_path, method: :get, data: {confirm: '로그아웃합니다'} %></p>
+  <%= link_to '친구찾기', friend_myfriend_path, method: :get %></p></h4>
+
+  <div class="posting" style="margin-top: 20px; margin-left: 150px; margin-right: 150px">
+    <%= form_for @post, url: {action: "update"} do |f| %>
+      <%= f.text_field :title, size: 100, maxlength: 135 %>
+      <%= f.text_field :content, size: 100 %>
+      <label><%= f.radio_button :scope, 1 %> 비공개</label>
+      <label><%= f.radio_button :scope, 2 %> 친구 공개</label>
+      <label><%= f.radio_button :scope, 3 %> 전체 공개</label>
+      <%= f.submit '전송' %>
+    <% end %>
+  </div>
+</div>

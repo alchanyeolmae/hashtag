@@ -1,0 +1,38 @@
+<br />
+Every Members<br /><hr />
+<% @users.each do |u| %>
+<%= u.nickname %>
+<form action="/friend/f_request" method="get">
+    <% if current_user.pending_friends.include?(u) %>
+        <h5>이미친구가되엇오요</h5>
+    <% else %>
+    <% unless current_user.id == u.id %>
+         <input type="hidden" name="friend" value="<%= u.nickname %>">
+    <button type="submit">friend ok</button>
+    <% end %>
+    <% end %>
+</form>
+<% end %>
+<br />
+
+
+<hr />
+Friend List<br />
+<% @requested.each do |r| %>
+    <%= r.nickname %>
+    <form action="/friend/f_accept" method="get">
+        <input type="hidden" name="friend" value="<%= r.nickname %>">
+        <button type="submit">accept</button>
+    </form>
+    <form action="/friend/f_decline" method="get">
+        <input type="hidden" name="friend" value="<%= r.nickname %>">
+        <button type="submit">decline</button>
+    </form>
+   
+<% end %>
+<% @friends.each do |f| %>
+<%= f.nickname %>
+<br />
+<% end %>
+<%= link_to 'search friends', friend_search_path, method: :post %>
+

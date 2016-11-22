@@ -1,0 +1,40 @@
+<h1>Home#index</h1>
+<p>Find me in app/views/home/index.html.erb</p>
+<p id="notice"><%= notice %></p>
+<div class="container">
+  <h4>해시태그를 찾아 볼까요</h4>
+    <form action='hashtags' method='get'>
+    <input type="text" name="search_hash">
+    <button type="submit">검색</button>
+    </form><hr>
+</div>
+<div class="container">
+  <%= form_for @post, url: {action: "create"} do |p| %>
+    <%= p.hidden_field :user_id, value: current_user.id %>
+    <%= p.text_field :title %><br />
+    <%= p.text_area :content, size: "60*12" %><br />
+    <label><%= p.radio_button :scope, 1 %> 비공개</label>
+    <label><%= p.radio_button :scope, 2 %> 친구 공개</label>
+    <label><%= p.radio_button :scope, 3 %> 전체 공개</label>
+    <%= p.submit "create" %>
+   
+  <% end %>
+  <br />
+ <% @posts.each do |f| %>
+    <% if current_user.read_authority?(f) %>
+      <strong>NICKNAME: </strong><%= f.user.nickname %><br /> <!---nickname은-->
+      <strong>TITLE: </strong><%= f.title %><br />
+      <strong>CONTENT WITH HASHTAG: </strong><%= linkify_hashtags(f.content)%><br />
+      <% if policy(f).update? %>
+      <a href="/edit/<%= f.id %>">[수정]</a>
+      <a href="/destroy/<%= f.id %>">[삭제]</a>
+      <hr>
+      <% else %>
+      <hr>
+      <% end %>
+    <% end %>
+  <% end %>
+  
+  <br />
+  <%= link_to 'make friends', friend_myfriend_path, method: :get %>
+</div>
